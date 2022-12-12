@@ -22,6 +22,14 @@ const TodoForm = {
             let text = $todoInput.val();
             TodoForm.add(text);
         })
+
+        $("#todo-list * .badge").hover(function(e) {
+            $(this).addClass("bg-primary");
+            $(this).removeClass("bg-secondary");
+        }, function(e) {
+            $(this).addClass("bg-secondary");
+            $(this).removeClass("bg-primary");
+        })
     }
 
 }
