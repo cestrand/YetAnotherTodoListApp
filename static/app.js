@@ -17,19 +17,27 @@ const TodoForm = {
         return $("#todo-list div input[type=text]");
     },
     install: function() {
-        $("#todo-list #button-add").on("click", function(e) {
+        $("#todo-list").on("click", "#button-add", function(e) {
             let $todoInput = TodoForm.todoInput();
             let text = $todoInput.val();
             TodoForm.add(text);
-        })
+        });
 
-        $("#todo-list * .badge").hover(function(e) {
-            $(this).addClass("bg-primary");
-            $(this).removeClass("bg-secondary");
-        }, function(e) {
-            $(this).addClass("bg-secondary");
-            $(this).removeClass("bg-primary");
-        })
+        $("#todo-list").on("mouseover mouseout", ".badge", function(e) {
+            if(e.type === 'mouseover') {
+                $(this).addClass("bg-primary");
+                $(this).removeClass("bg-secondary");
+            }
+            else if (e.type === 'mouseout') {
+                $(this).addClass("bg-secondary");
+                $(this).removeClass("bg-primary");
+            }
+        });
+
+        $("#todo-list").on("click", "a", function(e) {
+            $(this).parent().remove();
+        });
     }
+    
 
 }
