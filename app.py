@@ -9,5 +9,5 @@ def index():
 
 if __name__ == "__main__":
     app.run(
-        debug = os.environ("DEBUG", False)
+        debug = os.environ.get("DEBUG", True)
     )
