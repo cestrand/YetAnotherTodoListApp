@@ -1,41 +1,55 @@
+let todoForm;
+
 $(document).ready(function() {
     console.log("hi");
 
-    TodoForm.install();
+    todoForm = new TodoForm("#todo-list");
 });
 
-const TodoForm = {
-    add: function(text) {
-        $("#todo-list ul").append(`
+class TodoForm {
+    $form;
+
+    constructor(selector) {
+        this.$form = $(selector);
+        this.install();
+    }
+
+    add(text) {
+        this.$form.children("ul").append(`
         <li class="list-group-item d-flex justify-content-between align-items-center">
         ${text}
-        <a href="#"><span class="badge bg-secondary rounded-pill">Delete</span></a>
+        <a href="#" class="btn-delete"><span class="badge bg-secondary rounded-pill">Delete</span></a>
         </li>
-        `)
-    },
-    todoInput: function() {
-        return $("#todo-list div input[type=text]");
-    },
-    install: function() {
-        $("#todo-list").on("click", "#button-add", function(e) {
-            let $todoInput = TodoForm.todoInput();
-            let text = $todoInput.val();
-            TodoForm.add(text);
+        `);
+    }
+
+    get $input() {
+        return this.$form.find("input[type=text]");
+    }
+
+    install() {
+        // Bind event for Add button
+        this.$form.on("click", "#button-add", e => {
+            let text = this.$input.val();
+            this.add(text);
         });
 
-        $("#todo-list").on("mouseover mouseout", ".badge", function(e) {
+        // Bind event for Delete badge mouseover
+        this.$form.on("mouseover mouseout", ".btn-delete", e => {
+            let badge = $(e.currentTarget).children(".badge");
             if(e.type === 'mouseover') {
-                $(this).addClass("bg-primary");
-                $(this).removeClass("bg-secondary");
+                badge.addClass("bg-primary");
+                badge.removeClass("bg-secondary");
             }
             else if (e.type === 'mouseout') {
-                $(this).addClass("bg-secondary");
-                $(this).removeClass("bg-primary");
+                badge.addClass("bg-secondary");
+                badge.removeClass("bg-primary");
             }
         });
 
-        $("#todo-list").on("click", "a", function(e) {
-            $(this).parent().remove();
+        // Bind event for Delete badge click
+        this.$form.on("click", "a", e => {
+            $(e.currentTarget).parent().remove();
         });
     }
     
