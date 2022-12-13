@@ -1,8 +1,6 @@
 let todoForm;
 
 $(document).ready(function() {
-    console.log("hi");
-
     todoForm = new TodoForm("#todo-list");
 });
 
@@ -52,6 +50,4 @@ class TodoForm {
             $(e.currentTarget).parent().remove();
         });
     }
-    
-
 }
