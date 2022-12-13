@@ -30,6 +30,7 @@ class TodoForm {
         this.$form.on("click", "#button-add", e => {
             let text = this.$input.val();
             this.add(text);
+            this.$input.val('');
         });
 
         // Bind event for Delete badge mouseover
